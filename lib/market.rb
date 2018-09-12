@@ -22,17 +22,31 @@ class Market
   end
 
   def sorted_item_list
+    unique_items.sort
+  end
+
+  def unique_items
     item_array = []
     vendor_inventory.map do |inv|
       item_array += inv.keys
     end
-    item_array.uniq.sort
+    item_array.uniq
   end
 
   def vendor_inventory
     @vendors.map do |vendor|
       vendor.inventory
     end
+  end
+
+  def total_inventory
+    inventory_hash = Hash.new(0)
+    unique_items.each do |item|
+      @vendors.each do |vendor|
+        inventory_hash[item] += vendor.check_stock(item)
+      end
+    end
+    inventory_hash
   end
 
 end
