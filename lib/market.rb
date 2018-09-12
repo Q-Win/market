@@ -49,4 +49,19 @@ class Market
     inventory_hash
   end
 
+  def sell(item, amount)
+    total_sold = amount
+
+    @vendors.each do |vendor|
+      binding.pry
+      if vendor.inventory[item] < total_sold
+        total_sold -= vendor.inventory[item]
+        vendor.inventory[item] = 0
+      else
+        vendor_inventory[item] -= total_sold
+        return
+      end
+    end
+  end
+
 end
