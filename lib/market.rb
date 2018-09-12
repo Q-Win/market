@@ -21,4 +21,18 @@ class Market
     @vendors.find_all {|vendor| vendor.check_stock(item) > 0 }
   end
 
+  def sorted_item_list
+    item_array = []
+    vendor_inventory.map do |inv|
+      item_array += inv.keys
+    end
+    item_array.uniq.sort
+  end
+
+  def vendor_inventory
+    @vendors.map do |vendor|
+      vendor.inventory
+    end
+  end
+
 end
